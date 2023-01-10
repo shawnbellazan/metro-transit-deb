@@ -19,63 +19,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.tooensure.transit.metro.navigation.GoToNavigation
 import com.tooensure.transit.metro.ui.theme.MetroTransitTheme
+import com.tooensure.transit.metro.widgets.BusinessCard
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GoToApp()
+            GoToApp { GoToNavigation() }
         }
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
-fun GoToApp(content: @Composable () -> Unit = { })
+fun GoToApp(
+    content: @Composable () -> Unit = {})
 {
     MetroTransitTheme {
+
+        content()
         // Scaffold
-        Scaffold(
-            topBar = {
-                Surface() {
-                    // NavSurface()
-                }
-            }
-        ) { x ->
-            Box(modifier = Modifier.padding(x))
-            {
-                content()
-            }
-        }
+//        Scaffold(
+//            topBar = {
+//                // NavBar
+//            }
+//        ) { x ->
+//            Box(modifier = Modifier.padding(x))
+//            {
+//                content()
+//            }
+//        }
     }
 }
 
-@Composable
-fun MainView(
-    name: String) {
-    Surface(Modifier.fillMaxSize()) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Hello",
-                modifier = Modifier,
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = "$name",
-                modifier = Modifier,
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-    }
-}
+
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun GoToAppPreview() {
    GoToApp {
-    MainView(name = "Metro Transit")
+       GoToNavigation()
    }
 }
