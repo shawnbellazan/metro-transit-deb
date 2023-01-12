@@ -1,6 +1,7 @@
 package com.tooensure.transit.metro.screens
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,11 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tooensure.transit.metro.models.Ticket
 import com.tooensure.transit.metro.models.getTickets
+import com.tooensure.transit.metro.navigation.GoToNavigation
+import com.tooensure.transit.metro.types.ScreenNavType
 
 @Composable
 fun TicketScreen(
     navController: NavController,
-) { TicketList() }
+) { TicketList(navController) }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,9 +77,9 @@ fun TicketTheme(
 }
 
 
-@Preview
 @Composable
 fun TicketList(
+    navController: NavController,
     tickets: List<Ticket> = getTickets()
 ) {
     TicketTheme() {
@@ -85,9 +88,11 @@ fun TicketList(
                 TicketRow(
                     ticket = ticket
                 )
-                {
-                    Log.d("Ticket Pressed","Navigate to ticket detail")
-                    //if (ticket.isActive)  else ,
+                {ticket
+                    Log.d("TicketClick","Ticket with id ${ticket.id}")
+                    navController?.navigate(route = ScreenNavType.TicketDetail.name + "/${ticket.id}"
+                    )
+
                 }
             }
         }
@@ -105,7 +110,10 @@ fun TicketRow(
 ) {
     Surface(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+               onItemClicked(ticket.id)
+            },
         color = if (ticket.isActive) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primary,
         contentColor = if (ticket.isActive) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary,
         shape = RoundedCornerShape(corner = CornerSize(0.dp))

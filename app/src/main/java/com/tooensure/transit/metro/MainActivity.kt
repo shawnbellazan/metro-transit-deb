@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -38,19 +39,7 @@ fun GoToApp(
     content: @Composable () -> Unit = {})
 {
     MetroTransitTheme {
-
-        content()
-        // Scaffold
-//        Scaffold(
-//            topBar = {
-//                // NavBar
-//            }
-//        ) { x ->
-//            Box(modifier = Modifier.padding(x))
-//            {
-//                content()
-//            }
-//        }
+       content()
     }
 }
 

@@ -1,14 +1,15 @@
 package com.tooensure.transit.metro.navigation
 
-import android.window.SplashScreen
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tooensure.transit.metro.screens.BuyTicketScreen
-import com.tooensure.transit.metro.screens.GoToScreen
+import androidx.navigation.navArgument
 import com.tooensure.transit.metro.screens.HomeScreen
+import com.tooensure.transit.metro.screens.TicketDetailScreen
 import com.tooensure.transit.metro.screens.TicketScreen
+import com.tooensure.transit.metro.types.ScreenNavType
 
 @Composable
 fun GoToNavigation()
@@ -17,17 +18,30 @@ fun GoToNavigation()
 
     NavHost(
         navController = navController,
-        startDestination = GoToScreen.HomeScreen.name) {
-        composable(GoToScreen.HomeScreen.name) {
+        startDestination = ScreenNavType.HomeScreen.name) {
+        composable(ScreenNavType.HomeScreen.name) {
             // Go to Home Screen
             HomeScreen(
                 navController = navController)
         }
-
-        composable(GoToScreen.TicketScreen.name) {
+        composable(ScreenNavType.TicketScreen.name) {
             // Go to Home Screen
             TicketScreen(
                 navController = navController)
         }
+        composable(ScreenNavType.TicketDetail.name + "/{id}",
+            arguments = listOf(
+                navArgument(name = "id") {
+                    type = NavType.StringType
+                }
+            ))
+        {   backStack ->
+            TicketDetailScreen(
+                navController = navController,
+                key = backStack.arguments?.getString("id")
+            )
+        }
+
+
     }
 }
